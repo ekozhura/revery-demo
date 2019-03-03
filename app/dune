@@ -1,0 +1,8 @@
+(executables
+    (names App)
+    (package App)
+    (public_names App)
+    (libraries
+        js_of_ocaml
+        Revery
+            ))
