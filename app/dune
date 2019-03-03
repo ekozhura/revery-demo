@@ -5,4 +5,7 @@
     (libraries
         js_of_ocaml
         Revery
+        Yojson
+        Core
+        App_Components
             ))

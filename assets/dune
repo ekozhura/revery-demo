@@ -1,4 +1,4 @@
 (install
     (section bin)
     (package App)
-    (files Roboto-Regular.ttf))
+    (files Roboto-Regular.ttf OpenSans-Regular.ttf logo.png app.settings.json))

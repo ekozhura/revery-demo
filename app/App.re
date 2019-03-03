@@ -1,110 +1,93 @@
 open Revery;
 open Revery.UI;
 open Revery.UI.Components;
+open Yojson.Safe;
+open Core;
+open App_Components;
 
-module AnimatedText = {
-  let component = React.component("AnimatedText");
+module AppSettings = {
+  let sidebarWidth = 250;
+}
 
-  let createElement = (~children as _, ~delay, ~textContent, ()) =>
-    component(hooks => {
-      let (translate, hooks) =
-        Hooks.animation(
-          Animated.floatValue(50.),
-          {
-            toValue: 0.,
-            duration: Seconds(0.5),
-            delay: Seconds(delay),
-            repeat: false,
-            easing: Animated.linear,
-          },
-          hooks,
-        );
+let buf = In_channel.read_all(
+  Revery.Environment.getExecutingDirectory() ++ "app.settings.json"
+);
 
-      let (opacityVal: float, hooks) =
-        Hooks.animation(
-          Animated.floatValue(0.),
-          {
-            toValue: 1.0,
-            duration: Seconds(1.),
-            delay: Seconds(delay),
-            repeat: false,
-            easing: Animated.linear,
-          },
-          hooks,
-        );
-
-      let textHeaderStyle =
-        Style.[
-          color(Colors.white),
-          fontFamily("Roboto-Regular.ttf"),
-          fontSize(24),
-          marginHorizontal(8),
-          opacity(opacityVal),
-          transform([Transform.TranslateY(translate)]),
-        ];
-
-      (hooks, <Text style=textHeaderStyle text=textContent />);
-    });
-};
-
-module SimpleButton = {
-  let component = React.component("SimpleButton");
-
-  let createElement = (~children as _, ()) =>
-    component(hooks => {
-      let (count, setCount, hooks) =
-        React.Hooks.state(0, hooks);
-      let increment = () => setCount(count + 1);
-
-      let wrapperStyle =
-        Style.[
-          backgroundColor(Color.rgba(1., 1., 1., 0.1)),
-          border(~width=2, ~color=Colors.white),
-          margin(16),
-        ];
-
-      let textHeaderStyle =
-        Style.[
-          color(Colors.white),
-          fontFamily("Roboto-Regular.ttf"),
-          fontSize(20),
-          margin(4),
-        ];
-
-      let textContent = "Click me: " ++ string_of_int(count);
-      (hooks, <Clickable onClick=increment>
-        <View style=wrapperStyle>
-          <Text style=textHeaderStyle text=textContent />
-        </View>
-      </Clickable>);
-    });
-};
+let json_string = from_string(buf);
+let app_title = json_string 
+  |> Util.member("app") 
+  |> Util.member("name") 
+  |> Util.to_string;
 
 let init = app => {
-  let win = App.createWindow(app, "Hello world!");
+  let win = App.createWindow(
+    ~createOptions={
+      ...Window.defaultCreateOptions,
+      icon: Some("logo.png")
+    },
+    app, 
+    app_title
+  );
 
   let containerStyle =
     Style.[
-      backgroundColor(Color.rgb(0., 0., 0.)),
       position(`Absolute),
       justifyContent(`Center),
       alignItems(`Center),
       bottom(0),
       top(0),
-      left(0),
+      left(AppSettings.sidebarWidth),
       right(0),
+      backgroundColor(Colors.black),
     ];
 
-  let innerStyle = Style.[backgroundColor(Color.rgb(0., 0., 0.)),flexDirection(`Row), alignItems(`FlexEnd)];
+  let innerStyle = 
+    Style.[
+      position(`Absolute),
+      top(0),
+      left(0),
+      right(0),
+      bottom(0),
+      flexDirection(`Row), 
+      alignItems(`FlexEnd)
+    ];
 
   let render = () =>
-    <View style=containerStyle>
-      <View style=innerStyle>
-        <AnimatedText delay=0.0 textContent="Welcome" />
-        <AnimatedText delay=0.5 textContent="to" />
-        <AnimatedText delay=1. textContent="Revery" />
+    <View style=Style.[
+      position(`Absolute),
+      bottom(0),
+      top(0),
+      left(0),
+      right(0)
+    ]>
+      <ScrollView
+        style=Style.[
+          position(`Absolute),
+          top(0),
+          left(0),
+          width(AppSettings.sidebarWidth),
+          bottom(0),
+          backgroundColor(Colors.darkSlateGray),
+        ]>
+        <View/>
+      </ScrollView>
+      <View style=containerStyle>
+        <View style=innerStyle>
+          <Text style=Style.[
+            color(Colors.white),
+            fontFamily(Fonts.openSans),
+            fontSize(14),
+            margin(4),
+          ] text="text" />
+          <Text style=Style.[
+            color(Colors.white),
+            fontFamily(Fonts.roboto),
+            fontSize(14),
+            margin(4),
+          ] text="text2" />
+        </View>
+        <RegularButton />
       </View>
-      <SimpleButton />
     </View>;
 
   UI.start(win, render);

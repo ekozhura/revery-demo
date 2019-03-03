@@ -1,0 +1,6 @@
+(library
+    (name App_Components)
+    (public_name App_Components)
+    (libraries
+        Revery
+            ))

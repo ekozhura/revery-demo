@@ -4,3 +4,4 @@ _build/
 esy.lock/
 .merlin
 *.install
+.DS_Store
