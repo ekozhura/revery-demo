@@ -1,6 +1,4 @@
 (library
     (name App_Components)
-    (public_name App_Components)
-    (libraries
-        Revery
-            ))
+    (public_name App.Components)
+    (libraries Revery))

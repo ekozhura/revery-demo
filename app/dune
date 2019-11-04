@@ -4,8 +4,8 @@
     (public_names App)
     (libraries
         js_of_ocaml
-        Revery
-        Yojson
         Core
+        Yojson
+        Revery
         App_Components
             ))

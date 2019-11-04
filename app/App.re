@@ -1,6 +1,5 @@
 open Revery;
 open Revery.UI;
-open Revery.UI.Components;
 open Yojson.Safe;
 open Core;
 open App_Components;
@@ -23,6 +22,7 @@ let init = app => {
   let win = App.createWindow(
     ~createOptions={
       ...Window.defaultCreateOptions,
+      maximized: true,
       icon: Some("logo.png")
     },
     app, 
@@ -38,7 +38,7 @@ let init = app => {
       top(0),
       left(AppSettings.sidebarWidth),
       right(0),
-      backgroundColor(Colors.black),
+      backgroundColor(Color.hex("#252629")),
     ];
 
   let innerStyle = 
@@ -49,7 +49,8 @@ let init = app => {
       right(0),
       bottom(0),
       flexDirection(`Row), 
-      alignItems(`FlexEnd)
+      alignItems(`FlexEnd),
+      backgroundColor(Color.hex("#2F3034"))
     ];
 
   let render = () =>
@@ -60,17 +61,9 @@ let init = app => {
       left(0),
       right(0)
     ]>
-      <ScrollView
-        style=Style.[
-          position(`Absolute),
-          top(0),
-          left(0),
-          width(AppSettings.sidebarWidth),
-          bottom(0),
-          backgroundColor(Colors.darkSlateGray),
-        ]>
-        <View/>
-      </ScrollView>
+      <Sidebar sidebarWidth={AppSettings.sidebarWidth}>
+        <RegularButton />
+      </Sidebar>
       <View style=containerStyle>
         <View style=innerStyle>
           <Text style=Style.[
@@ -86,7 +79,7 @@ let init = app => {
             margin(4),
           ] text="text2" />
         </View>
-        <RegularButton />
+        
       </View>
     </View>;
 
