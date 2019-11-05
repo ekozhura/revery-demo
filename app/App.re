@@ -45,17 +45,9 @@ let init = app => {
       left(0),
       right(0)
     ]>
-      <ScrollView
-        style=Style.[
-          position(`Absolute),
-          top(0),
-          left(0),
-          width(AppSettings.sidebarWidth),
-          bottom(0),
-          backgroundColor(Colors.darkSlateGray),
-        ]>
-        <View/>
-      </ScrollView>
+      <Sidebar sidebarWidth={AppSettings.sidebarWidth}>
+        <RegularButton />
+      </Sidebar>
       <View style=containerStyle>
         <View style=innerStyle>
           <Text style=Style.[

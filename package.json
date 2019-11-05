@@ -4,9 +4,7 @@
   "description": "Revery App",
   "esy": {
     "build": "dune build -p App",
-    "install": [
-      "esy-installer App.install"
-    ]
+    "install": [ "esy-installer App.install" ]
   },
   "revery-packager": {
     "bundleName": "ExampleApp",
@@ -22,15 +20,17 @@
   },
   "resolutions": {
     "@opam/cmdliner": "1.0.2",
-    "@opam/js_of_ocaml": "github:ocsigen/js_of_ocaml:js_of_ocaml.opam#db257ce",
-    "@opam/js_of_ocaml-compiler": "github:ocsigen/js_of_ocaml:js_of_ocaml-compiler.opam#db257ce",
+    "@opam/js_of_ocaml":
+      "github:ocsigen/js_of_ocaml:js_of_ocaml.opam#db257ce",
+    "@opam/js_of_ocaml-compiler":
+      "github:ocsigen/js_of_ocaml:js_of_ocaml-compiler.opam#db257ce",
     "pesy": "0.4.1",
     "rebez": "github:jchavarri/rebez#46cbc183",
     "@opam/merlin-extend": "0.4"
   },
-  "scripts": { 
+  "scripts": {
     "format": "bash -c \"refmt --in-place *.re\"",
-    "run": "esy x App" 
+    "run": "esy x App"
   },
   "devDependencies": {
     "ocaml": "~4.7.0",
