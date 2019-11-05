@@ -1,32 +1,17 @@
 open Revery;
 open Revery.UI;
 open Revery.UI.Components;
-open Yojson.Safe;
-open Core;
+open Yojson.Safe; 
 open App_Components;
 
 module AppSettings = {
   let sidebarWidth = 250;
 }
 
-let buf = In_channel.read_all(
-  Revery.Environment.getExecutingDirectory() ++ "app.settings.json"
-);
-
-let json_string = from_string(buf);
-let app_title = json_string 
-  |> Util.member("app") 
-  |> Util.member("name") 
-  |> Util.to_string;
-
 let init = app => {
   let win = App.createWindow(
-    ~createOptions={
-      ...Window.defaultCreateOptions,
-      icon: Some("logo.png")
-    },
     app, 
-    app_title
+    "hello world"
   );
 
   let containerStyle =
@@ -52,7 +37,7 @@ let init = app => {
       alignItems(`FlexEnd)
     ];
 
-  let render = () =>
+  let render = 
     <View style=Style.[
       position(`Absolute),
       bottom(0),
@@ -90,7 +75,8 @@ let init = app => {
       </View>
     </View>;
 
-  UI.start(win, render);
+    let _ = UI.start(win, render);
+    ();
 };
 
 App.start(init);

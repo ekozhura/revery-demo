@@ -1,11 +1,9 @@
-(executables
-    (names App)
+(executable
+    (name App)
     (package App)
-    (public_names App)
+    (public_name App)
     (libraries
-        js_of_ocaml
         Revery
         Yojson
-        Core
         App_Components
             ))
