@@ -14,9 +14,18 @@ let createElement = (~children as _, ()) =>
 
     let wrapperStyle =
       Style.[
-        backgroundColor(Color.rgba(1., 1., 1., 0.1)),
-        border(~width=2, ~color=Colors.white),
+        backgroundColor(Colors.white),
+        border(~width=1, ~color=Colors.white),
+        borderRadius(5.),
         margin(16),
+      ];
+
+    let innerStyle =
+      Style.[
+        backgroundColor(Colors.black),
+        border(~width=1, ~color=Colors.black),
+        borderRadius(5.),
+        margin(1)
       ];
 
     let textHeaderStyle =
@@ -24,14 +33,16 @@ let createElement = (~children as _, ()) =>
         color(Colors.white),
         fontFamily(Fonts.openSans),
         fontSize(20),
-        margin(4),
+        margin(14),
       ];
 
     let textContent = "Click me: " ++ string_of_int(count);
 
     (hooks, <Clickable onClick=increment>
       <View style=wrapperStyle>
-        <Text style=textHeaderStyle text=textContent />
+        <View style=innerStyle>
+          <Text style=textHeaderStyle text=textContent />
+        </View>
       </View>
     </Clickable>);
   });

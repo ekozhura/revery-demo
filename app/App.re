@@ -1,4 +1,5 @@
 open Revery;
+open Revery_Core.WindowCreateOptions;
 open Revery.UI;
 open Revery.UI.Components;
 open Yojson.Safe; 
@@ -10,6 +11,10 @@ module AppSettings = {
 
 let init = app => {
   let win = App.createWindow(
+    ~createOptions={
+      ...WindowCreateOptions.default,
+      icon: Some("logo.png")
+    },
     app, 
     "hello world"
   );
